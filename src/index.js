@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import cors from 'cors'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
@@ -21,6 +22,7 @@ const server = new ApolloServer({
   context: {
     models,
     // me: models.users[1]
+    secret: process.env.SECRET
   }
 })
 
@@ -31,7 +33,7 @@ app.get('/', (req, res) => {
 })
 
 
-console.log(process.env.NODE_ENV)
+console.log(process.env.SECRET)
 
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
