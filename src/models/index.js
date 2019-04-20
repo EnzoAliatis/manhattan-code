@@ -25,8 +25,19 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const models = {
-  User: sequelize.import('./user')
+  User: sequelize.import('./user'),
+  Employee: sequelize.import('./employee')
 }
+
+
+// "En el mismo archivo,
+// puede asociar físicamente todos sus modelos entre sí para exponerlos
+//  a su aplicación como capa de acceso a datos (modelos) para la base de datos"
+Object.keys(models).forEach(key => {
+  if ('associate' in models[key]) {
+    models[key].associate(models)
+  }
+})
 
 export { sequelize };
 

@@ -9,7 +9,7 @@ import schema from './schema'
 import resolvers from './resolvers'
 import models, { sequelize } from './models'
 
-import { generateUsers } from '../utils/db-seeds'
+import { generateUsers, generateEmployees } from '../utils/db-seeds'
 
 const app = express()
 
@@ -45,7 +45,8 @@ sequelize.sync({
   force: isTest
 }).then(async () => {
   if(isTest) {
-    generateUsers(5,models.User)
+    await generateUsers(5,models.User)
+    await generateEmployees(5, models.Employee)
   }
   
   httpServer.listen({ port: 8000 }, () => {

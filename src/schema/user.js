@@ -28,13 +28,6 @@ export default gql`
     token: String!
   }
 
-  type Employee {
-    role: Int!
-    fullname: String!
-    phone: String!
-    password: String!
-  }
-
   type User {
     id: ID!
     email: String!

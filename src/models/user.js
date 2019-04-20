@@ -69,7 +69,15 @@ const user = (sequelize, DataTypes) => {
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
+  },{
+    underscored: true,
   })
+
+  User.associate = models => {
+    User.hasMany(models.Employee, {
+      onDelete: 'CASCADE',
+    })
+  }
 
   User.prototype.generatePasswordHash = async function () {
     const saltRounds = 10
