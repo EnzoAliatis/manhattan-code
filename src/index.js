@@ -33,8 +33,6 @@ app.get('/', (req, res) => {
 })
 
 
-console.log(process.env.SECRET)
-
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 

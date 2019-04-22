@@ -25,6 +25,5 @@ export default gql`
     role: Int!
     fullname: String!
     phone: String!
-    password: String!
   }
 `

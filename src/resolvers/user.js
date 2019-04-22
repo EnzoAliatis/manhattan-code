@@ -13,6 +13,9 @@ export default {
   Query: {
     user: async (parent, { id }, { models }) => {
       return await models.User.findByPk(id)
+    },
+    me: async (parent, args, { models, me }) => {
+      return await models.User.findByPk(me.id)
     }
   },
 
@@ -41,6 +44,16 @@ export default {
       }
 
       return { token: createToken(user, secret, '30m')}
+    }
+  },
+
+  User: {
+    employees: async (user, args, { models }) => {
+      return await models.Employee.findAll({
+        where: {
+          user_id: user.id
+        }
+      })
     }
   }
 }
