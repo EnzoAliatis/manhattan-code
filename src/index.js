@@ -19,6 +19,15 @@ app.use(cors())
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
+  formatError: error => {
+    const message = error.message
+      .replace('SequelizeValidationError: ', '')
+      .replace('Validation error: ', '')
+    return {
+      ...error,
+      message
+    }
+  },
   context: {
     models,
     // me: models.users[1]
@@ -43,6 +52,9 @@ sequelize.sync({
   force: isTest
 }).then(async () => {
   if(isTest) {
+    await generateUsers(5,models.User)
+    await generateEmployees(5, models.Employee)
+  } else {
     await generateUsers(5,models.User)
     await generateEmployees(5, models.Employee)
   }
