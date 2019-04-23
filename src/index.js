@@ -55,6 +55,7 @@ sequelize.sync({
     await generateUsers(5,models.User)
     await generateEmployees(5, models.Employee)
   } else {
+    // Elminate on production
     await generateUsers(5,models.User)
     await generateEmployees(5, models.Employee)
   }

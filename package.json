@@ -10,7 +10,8 @@
     "start": "nodemon --exec babel-node src/index.js",
     "test:run-server": "TEST_DATABASE=mytestdatabase npm start",
     "test:execute-test": "mocha --require @babel/register 'src/**/*.spec.js'",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "babel-node src/index.js -d dist"
   },
   "repository": "enzoaliatis.git",
   "author": "Enzo Aliatis",
