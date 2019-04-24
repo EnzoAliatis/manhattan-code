@@ -15,16 +15,10 @@ export default {
       return await models.User.findByPk(id)
     },
     me: async (parent, args, { models, me }) => {
-      console.log(me)
       if (!me) {
         return null
-      }
-      if (me.role === 1) {
-        return await models.User.findByPk(me.id)
-      } else {
-        return await models.Employee.findByPk(me.id)
-      }
-      
+      } 
+      return await models.User.findByPk(me.id)
     }
   },
 

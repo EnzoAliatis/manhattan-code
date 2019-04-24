@@ -2,7 +2,8 @@ import { gql } from 'apollo-server-express'
 
 export default gql`
   extend type Query {
-    employee(id: ID!): Employee!
+    myEmployee(id: ID!): Employee!
+    myEmployees: [Employee]
   }
 
 
@@ -12,10 +13,10 @@ export default gql`
       phone: String!
       password: String!
       role: Int!
-    ): Token
+    ): Token!
 
     employee_signIn(
-      email: String!
+      fullname: String!
       password: String!
     ): Token!
   }
