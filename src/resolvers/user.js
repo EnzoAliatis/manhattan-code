@@ -18,7 +18,12 @@ export default {
       if (!me) {
         return null
       }
-      return await models.User.findByPk(me.id)
+      if (me.role === 1) {
+        return await models.User.findByPk(me.id)
+      } else {
+        return await models.Employee.findByPk(me.id)
+      }
+      
     }
   },
 

@@ -12,7 +12,7 @@ export default gql`
       phone: String!
       password: String!
       role: Int!
-    ): Token!
+    ): Token
 
     employee_signIn(
       email: String!

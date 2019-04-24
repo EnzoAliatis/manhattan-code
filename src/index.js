@@ -1,13 +1,15 @@
 import 'dotenv/config';
 import cors from 'cors'
 import express from 'express'
-import { ApolloServer } from 'apollo-server-express'
+import { ApolloServer, AuthenticationError } from 'apollo-server-express'
 import http from 'http'
+import jwt from 'jsonwebtoken'
 
 
 import schema from './schema'
 import resolvers from './resolvers'
 import models, { sequelize } from './models'
+import { getMe } from '../utils/utils-server'
 
 import { generateUsers, generateEmployees } from '../utils/db-seeds'
 
@@ -28,10 +30,14 @@ const server = new ApolloServer({
       message
     }
   },
-  context: {
-    models,
-    // me: models.users[1]
-    secret: process.env.SECRET
+  context: async ({req}) => {
+    const me = await getMe(req, jwt, AuthenticationError)
+
+    return {
+      models,
+      me,
+      secret: process.env.SECRET
+    }
   }
 })
 

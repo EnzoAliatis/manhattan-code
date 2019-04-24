@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
+import { combineResolvers } from 'graphql-resolvers';
 
-import { AuthenticationError, UserInputError } from 'apollo-server'
+import { isAuthenticated } from './authoritazion'
 
 const createToken = async (employee, secret, expiresIn) => {
   const { id, fullname, role } = employee
@@ -12,5 +13,17 @@ export default {
     employee: async (parent, { id }, { models }) => {
       return await models.Employee.findByPk(id)
     }
+  },
+
+  Mutation: {
+    employee_signUp: combineResolvers(
+      isAuthenticated,
+      async (parent, { fullname, phone, password, role }, { models, me, secret }) => {
+        const employee = await models.Employee.create({
+          fullname, phone, password, role, userId: me.id 
+        })
+        return { token: createToken(employee, secret, '30m')}
+      }
+    )
   }
 }
