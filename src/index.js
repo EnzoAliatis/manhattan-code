@@ -60,12 +60,7 @@ sequelize.sync({
   if(isTest) {
     await generateUsers(5,models.User)
     await generateEmployees(5, models.Employee)
-  } else {
-    // Elminate on production
-    await generateUsers(5,models.User)
-    await generateEmployees(5, models.Employee)
   }
-  
   httpServer.listen({ port: 8000 }, () => {
     console.log('Apollo server on http://localhost:8000/graphql')
   })

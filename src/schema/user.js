@@ -4,7 +4,7 @@ export default gql`
 
   extend type Query {
     user(id: ID!): User!
-    me: MeResult
+    me: User
   }
 
   extend type Mutation {
@@ -39,6 +39,4 @@ export default gql`
     employees: [Employee!]
     role: Int!
   }
-
-  union MeResult = User | Employee
 `
