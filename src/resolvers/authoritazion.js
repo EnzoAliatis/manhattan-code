@@ -11,3 +11,14 @@ export const isAdmin = (parent, args, { me }) => {
   }
   return new ForbiddenError('Not have permision')
 }
+
+
+export const isMineEmployee = async (parent, { id }, { me, models } ) => {
+  const employee = await models.Employee.findByPk(id, { raw: true })
+
+  if (employee.userId !== me.id) {
+    return new ForbiddenError(`Employee with id:${employee.id} is not yours`)
+  }
+
+  return skip
+}

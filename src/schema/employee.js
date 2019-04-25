@@ -13,16 +13,19 @@ export default gql`
       phone: String!
       password: String!
       role: Int!
-    ): Token!
+    ): Employee!
 
     employee_signIn(
       fullname: String!
       password: String!
     ): Token!
+
+    delete_my_employee(id: ID!): Boolean!
   }
 
 
   type Employee {
+    id: ID!
     role: Int!
     fullname: String!
     phone: String!

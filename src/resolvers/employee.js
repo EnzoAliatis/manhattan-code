@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { combineResolvers } from "graphql-resolvers";
 
-import { isAuthenticated, isAdmin } from "./authoritazion";
+import { isAuthenticated, isAdmin, isMineEmployee } from "./authoritazion";
 
 const createToken = async (employee, secret, expiresIn) => {
   const { id, fullname, role } = employee;
@@ -51,7 +51,7 @@ export default {
           role,
           userId: me.id
         });
-        return { token: createToken(employee, secret, "30m") };
+        return employee
       }
     ),
     employee_signIn: async (parent, { fullname, password }, { models, secret }) => {
@@ -68,6 +68,23 @@ export default {
       }
 
       return { token: createToken(employee, secret, '30m')}
-    }
+    },
+
+    delete_my_employee: combineResolvers(
+      isAuthenticated,
+      isAdmin,
+      isMineEmployee,
+      async (
+        parent,
+        { id },
+        { models }
+      ) => {
+        return await models.Employee.destroy({
+          where: {
+            id
+          }
+        })
+      }
+    )
   }
 };
