@@ -85,6 +85,23 @@ export default {
           }
         })
       }
+    ),
+
+    update_my_employee: combineResolvers(
+      isAuthenticated,
+      isAdmin,
+      isMineEmployee,
+      async (
+        parent,
+        { id, fullname, phone, role },
+        { models }
+      ) => {
+        const employee = await models.Employee.findByPk(id)
+        console.log(phone)
+        employee.update({ fullname, phone, role })
+          .then(() => true)
+          .catch(() => false)
+      }
     )
   }
 };
