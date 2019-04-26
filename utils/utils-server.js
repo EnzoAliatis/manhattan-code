@@ -1,6 +1,6 @@
 
 const getMe = async (req, jwt, err) => {
-  const token = req.headers['token-x']
+  const token = req.headers["authorization"]
   if (token) {
     try {
       return await jwt.verify(token, process.env.SECRET)

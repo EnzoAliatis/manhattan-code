@@ -4,6 +4,8 @@ import userSchema from './user'
 import employeeSchema from './employee'
 
 const linkSchema = gql`
+  scalar Date
+
   type Query {
     _: Boolean
   }

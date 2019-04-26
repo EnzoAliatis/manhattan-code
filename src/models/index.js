@@ -1,17 +1,17 @@
 import Sequelize from 'sequelize'
 
 let sequelize
+const timezone = '+05:00'
 
 if (process.env.NODE_ENV === 'test') {
-  sequelize = new Sequelize(
-    'manhattan-test',
-    'postgres',
-    'docker',
-    {
-      dialect: 'postgres',
-      host: 'localhost'
-    }
-  )
+
+  sequelize = new Sequelize({
+    database: 'manhattan-test',
+    username: 'postgres',
+    password: 'docker',
+    host: 'localhost',
+    dialect: 'postgres'
+  })
 } else {
   sequelize = new Sequelize(
     process.env.DATABASE_NAME,
@@ -19,7 +19,8 @@ if (process.env.NODE_ENV === 'test') {
     process.env.DATABASE_PASSWORD,
     {
       dialect: 'postgres',
-      host: process.env.DATABASE_END_POINT
+      host: process.env.DATABASE_END_POINT,
+      timezone: 'UTC -5'
     },
   );
 }

@@ -16,7 +16,7 @@ export default {
     },
     me: async (parent, args, { models, me }) => {
       if (!me) {
-        return null
+        throw new AuthenticationError('Authenticate error, you must login first')
       } 
       return await models.User.findByPk(me.id)
     }
@@ -27,10 +27,15 @@ export default {
       { email, fullname, phone, city, country, company, password },
       { models, secret }
     ) => {
-      const user = await models.User.create({
-        email, fullname, phone, city, country, company, password,
-      }) 
-      return { token: createToken(user, secret, '30m')}
+      let user
+      try {
+        user = await models.User.create({
+          email, fullname, phone, city, country, company, password,
+        }) 
+      } catch (error) {
+        throw new UserInputError('Form user invalid')
+      }
+      return { token: createToken(user, secret, process.env.TokenTTL)}
     },
 
     signIn: async (root, { email, password }, { models, secret }) => {
@@ -46,7 +51,7 @@ export default {
         throw new AuthenticationError('Invalid password')
       }
 
-      return { token: createToken(user, secret, '30m')}
+      return { token: createToken(user, secret, process.env.TokenTTL)}
     }
   },
 

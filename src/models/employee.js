@@ -30,14 +30,11 @@ const employee = (sequelize, DataTypes) => {
       }
     },
     role: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.ENUM,
       allowNull: false,
+      values: [2,3],
       validate: {
         notEmpty: true,
-        len: {
-          args: [1,4],
-          msg: 'Role out range'
-        }
       }
     },
     createdAt: DataTypes.DATE,
