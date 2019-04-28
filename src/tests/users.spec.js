@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import faker from 'faker'
 
 import * as userApi from './api';
 
@@ -47,7 +48,7 @@ describe('users', () => {
       const expectedResult = {
         data: {
           me: {
-            fullname: 'Enzo Aliatis',
+            email: 'enzo@aliatis.com',
           },
         },
       };
@@ -70,20 +71,26 @@ describe('users', () => {
   });
 
   describe('signUp(): Token!', () => {
-    it('return a token web user SignUp', async () => {
-      let data = await userApi.singnUp({
-        email: 'cristiano@ronaldo.com',
-        fullname: 'cristiano ronaldo',
-        phone: '099999999',
-        city: 'Manta',
-        country: 'Portugal',
-        company: 'CR7 AS',
-        password: 'Siiiiiiiiiuuuuu'
-      })
+    const fake = {
+      email: faker.internet.email(),
+      fullname: 'cristiano ronaldo',
+      phone: '099999999',
+      city: 'Manta',
+      country: 'Portugal',
+      company: 'CR7 AS',
+      password: 'Siiiiiiiiiuuuuu'
+    }
 
-      console.log(data)
-      expect(true).to.eql(true);
-
+    it('return a token when user SignUp', async () => {  
+      let data = await userApi.singnUp(fake)
+      const me = await userApi.me(data.data.data.signUp.token)
+      expect(me.data.data.me.email).to.eql(fake.email);
     })
+
+    it('return null when the email is already exists', async () => {
+      let data = await userApi.singnUp(fake)
+      expect(data.data.data).to.be.null;
+    })
+    
   })
 });

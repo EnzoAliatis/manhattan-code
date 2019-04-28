@@ -39,7 +39,7 @@ export const me = async token =>
       query: `
         {
           me {
-            fullname
+            email
           }
         }
       `,
@@ -54,7 +54,7 @@ export const me = async token =>
   );
 
 export const singnUp = async variables => {
-  await axios.post(API_URL, {
+  return await axios.post(API_URL, {
     query: `
     mutation(
       $email: String!,
