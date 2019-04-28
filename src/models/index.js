@@ -20,7 +20,6 @@ if (process.env.NODE_ENV === 'test') {
     {
       dialect: 'postgres',
       host: process.env.DATABASE_END_POINT,
-      timezone: 'UTC -5'
     },
   );
 }

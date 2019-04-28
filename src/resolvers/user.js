@@ -33,7 +33,7 @@ export default {
           email, fullname, phone, city, country, company, password,
         }) 
       } catch (error) {
-        throw new UserInputError('Form user invalid')
+        throw new UserInputError('Form user invalid or User is alredy exist')
       }
       return { token: createToken(user, secret, process.env.TokenTTL)}
     },

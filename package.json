@@ -8,9 +8,8 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "test:run-server": "TEST_DATABASE=mytestdatabase npm start",
-    "test:execute-test": "mocha --require @babel/register 'src/**/*.spec.js'",
-    "test": "echo \"No test specified\" && exit 0",
+    "test:server": "NODE_ENV=test babel-node src/index.js",
+    "test": "mocha --require @babel/register 'src/**/*.spec.js'",
     "build": "babel-node src/index.js -d dist"
   },
   "repository": "enzoaliatis.git",
@@ -37,6 +36,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
     "@babel/register": "^7.4.0",
+    "axios": "^0.18.0",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "morgan": "^1.9.1",

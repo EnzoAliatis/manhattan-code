@@ -1,12 +1,18 @@
-import jwt from "jsonwebtoken";
-import { combineResolvers } from "graphql-resolvers";
-import { ApolloError } from "apollo-server";
+import jwt from 'jsonwebtoken';
+import { combineResolvers } from 'graphql-resolvers';
+import { ApolloError } from 'apollo-server';
 
-import { isAuthenticated, isAdmin, isMineEmployee } from "./authoritazion";
+import {
+  isAuthenticated,
+  isAdmin,
+  isMineEmployee,
+} from './authoritazion';
 
 const createToken = async (employee, secret, expiresIn) => {
   const { id, fullname, role } = employee;
-  return await jwt.sign({ id, fullname, role }, secret, { expiresIn });
+  return await jwt.sign({ id, fullname, role }, secret, {
+    expiresIn,
+  });
 };
 
 export default {
@@ -20,16 +26,18 @@ export default {
           employee = await models.Employee.findOne({
             where: {
               id,
-              userId: me.id
-            }
+              userId: me.id,
+            },
           });
           if (!employee) {
-            throw new ApolloError("You dont have Employee with this id");
+            throw new ApolloError(
+              'You dont have Employee with this id'
+            );
           }
           return employee;
         } catch (error) {
           throw new ApolloError(
-            "Error finding my employee, please try again",
+            'Error finding my employee, please try again',
             error
           );
         }
@@ -42,14 +50,16 @@ export default {
         try {
           return await models.Employee.findAll({
             where: {
-              userId: me.id
-            }
+              userId: me.id,
+            },
           });
         } catch (error) {
-          throw new ApolloError("Error finding my employees, please try again");
+          throw new ApolloError(
+            'Error finding my employees, please try again'
+          );
         }
       }
-    )
+    ),
   },
 
   Mutation: {
@@ -67,10 +77,12 @@ export default {
             phone,
             password,
             role,
-            userId: me.id
+            userId: me.id,
           });
         } catch (error) {
-          throw new ApolloError('Error signin employee, please try againt latter')
+          throw new ApolloError(
+            'Error signin employee, please try againt latter'
+          );
         }
       }
     ),
@@ -79,19 +91,23 @@ export default {
       { fullname, password },
       { models, secret }
     ) => {
-      const employee = await models.Employee.findOne({ where: { fullname } });
+      const employee = await models.Employee.findOne({
+        where: { fullname },
+      });
 
       if (!employee) {
-        throw new UserInputError("No user found with this login credentials");
+        throw new UserInputError(
+          'No user found with this login credentials'
+        );
       }
 
       const isValid = await employee.validatePassword(password);
 
       if (!isValid) {
-        throw new AuthenticationError("Invalid password");
+        throw new AuthenticationError('Invalid password');
       }
 
-      return { token: createToken(employee, secret, "30m") };
+      return { token: createToken(employee, secret, '30m') };
     },
 
     delete_my_employee: combineResolvers(
@@ -101,8 +117,8 @@ export default {
       async (parent, { id }, { models }) => {
         return await models.Employee.destroy({
           where: {
-            id
-          }
+            id,
+          },
         });
       }
     ),
@@ -119,6 +135,6 @@ export default {
           .then(() => true)
           .catch(() => false);
       }
-    )
-  }
+    ),
+  },
 };
