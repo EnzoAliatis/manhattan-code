@@ -7,7 +7,7 @@
     "node": "11.1.0"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "node dist/index",
     "test:server": "NODE_ENV=test babel-node src/index.js",
     "test": "mocha --require @babel/register 'src/**/*.spec.js'",
     "build": "babel-node src/index.js -d dist"

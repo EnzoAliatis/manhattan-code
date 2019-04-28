@@ -51,6 +51,8 @@ app.get('/', (req, res) => {
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 
+console.log(process.env.NODE_ENV)
+
 const isTest = process.env.NODE_ENV === 'test' ? true : false
 
 
