@@ -9,9 +9,9 @@ import jwt from 'jsonwebtoken'
 import schema from './schema'
 import resolvers from './resolvers'
 import models, { sequelize } from './models'
-import { getMe } from '../utils/utils-server'
+import { getMe } from './utils/utils-server'
 
-import { generateUsers, generateEmployees } from '../utils/db-seeds'
+import { generateUsers, generateEmployees } from './utils/db-seeds'
 
 const app = express()
 
@@ -53,7 +53,8 @@ server.installSubscriptionHandlers(httpServer)
 
 console.log(process.env.NODE_ENV)
 
-const isTest = process.env.NODE_ENV === 'test' ? true : false
+// const isTest = process.env.NODE_ENV === 'test' ? true : false
+const isTest = true
 
 
 sequelize.sync({

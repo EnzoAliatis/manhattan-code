@@ -7,10 +7,11 @@
     "node": "11.1.0"
   },
   "scripts": {
-    "start": "node dist/index",
+    "start": "nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist",
+    "server": "NODE_ENV=production node dist/index.js",
     "test:server": "NODE_ENV=test babel-node src/index.js",
-    "test": "mocha --require @babel/register 'src/**/*.spec.js'",
-    "build": "babel-node src/index.js -d dist"
+    "test": "mocha --require @babel/register 'src/**/*.spec.js'"
   },
   "repository": "enzoaliatis.git",
   "author": "Enzo Aliatis",
