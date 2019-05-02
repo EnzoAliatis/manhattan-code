@@ -21,7 +21,7 @@ export default gql`
     ): Token!
 
     delete_my_employee(id: ID!): Boolean!
-    update_my_employee(id: ID! fullname: String role:Int phone:String): Boolean!
+    update_my_employee(id: ID! fullname: String role:Int phone:String): Employee!
   }
 
 

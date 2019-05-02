@@ -2,6 +2,7 @@ import { AuthenticationError, UserInputError, ForbiddenError } from 'apollo-serv
 import { skip } from 'graphql-resolvers'
 
 export const isAuthenticated = (parent, args, { me }) => {
+  console.log(me)
   return me ? skip : new ForbiddenError('Not authenticated as user')
 }
 
